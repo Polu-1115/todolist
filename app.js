@@ -13,9 +13,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://localhost:27017/todolistDB", {
+mongoose.set('strictQuery', false);
+
+mongoose.connect("mongodb+srv://admin-pralay:Polu1115@cluster0.7wry22m.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true
 });
+
 
 
 const itemsSchema = {
@@ -28,15 +31,15 @@ const item1 = new Item({
   name: "Welcome to your todoList!"
 });
 
-const item2 = new Item({
-  name: "Hit the + button to add a new item"
-});
+// const item2 = new Item({
+//   name: "Hit the + button to add a new item"
+// });
+//
+// const item3 = new Item({
+//   name: "<= Hit this to delete an item!"
+// });
 
-const item3 = new Item({
-  name: "<= Hit this to delete an item!"
-});
-
-const defaultItems = [item1, item2, item3];
+const defaultItems = [item1];
 
 const listSchema = {
   name: String,
