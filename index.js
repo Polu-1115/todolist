@@ -3,6 +3,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
 
+require('dotenv').config();
+
 
 const app = express();
 
@@ -15,9 +17,16 @@ app.use(express.static("public"));
 
 mongoose.set('strictQuery', false);
 
-mongoose.connect("mongodb+srv://admin-pralay:Polu1115@cluster0.7wry22m.mongodb.net/?retryWrites=true&w=majority", {
+const connectDB = async ()=>{
+try{
+  const conn = await mongoose.connect("mongodb+srv://admin-pralay:Polu1115@cluster0.7wry22m.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true
 });
+} catch(error){
+  console.log(error);
+  process.exit(1);
+}
+}
 
 
 
@@ -159,7 +168,8 @@ app.get("/about", function(req, res) {
 });
 
 
-
+connectDB().then(() => {
 app.listen(process.env.PORT, function() {
   console.log("Server started on port successfully.");
+  })
 });
